@@ -73,3 +73,23 @@ end)
 vim.keymap.set("n", "<leader><leader>", function()
     vim.cmd("so")
 end)
+
+-- Opens terminal
+local job_id = 0
+vim.keymap.set("n", "<leader>st", function ()
+  vim.cmd.vnew()
+  vim.cmd.term()
+  vim.api.nvim_command("wincmd J")
+  vim.api.nvim_win_set_height(0, 15)
+
+  job_id = vim.bo.channel
+end)
+
+-- Python: Create virtual environment
+vim.keymap.set("n", "<leader>cvenv", function ()
+  vim.fn.chansend(job_id, {"python -m venv venv\r\n"})
+end)
+-- Python: Enters virtual environment
+vim.keymap.set("n", "<leader>svenv", function ()
+  vim.fn.chansend(job_id, {"source venv/bin/activate\r\n"})
+end)
